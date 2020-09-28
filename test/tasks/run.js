@@ -50,7 +50,7 @@ test('run mount', async (t) => {
 });
 
 
-test('auto remove enabled', async (t) => {
+test('run auto remove enabled', async (t) => {
   const log = new MockLog();
   const task = new RunTask('test', {
     image: 'busybox',
@@ -62,7 +62,7 @@ test('auto remove enabled', async (t) => {
   t.false(await util.containerExists(containerId), `Container ${containerId} must be deleted when auto_remove is true`);
 });
 
-test('auto remove disabled', async (t) => {
+test('run auto remove disabled', async (t) => {
   const log = new MockLog();
   const task = new RunTask('test', {
     image: 'busybox',
