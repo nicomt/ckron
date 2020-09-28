@@ -34,8 +34,10 @@ $ ckron daemon --config /path/to/config.yml
 If you installed it in Docker:
 
 ```
-$ docker run -v C:/etc/ckron/config.yml:/etc/ckron/config.yml -v /var/run/docker.sock:/var/run/docker.sock 
---rm -it local/ckron daemon --config /path/to/config.yml
+$ docker run --rm -it \
+      -v $PWD/config.yml:/etc/ckron/config.yml \
+      -v /var/run/docker.sock:/var/run/docker.sock \
+      nicomt/ckron daemon
 ```
 
 For production is recommended to setup a service in something like [systemd](https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6), upstart or [forever](https://www.npmjs.com/package/forever). A service will ensure the daemon is restarted in case of an unexpected failure
