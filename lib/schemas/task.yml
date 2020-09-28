@@ -1,0 +1,5 @@
+oneOf:
+  - "$ref": "tasks/run.yml"
+  - "$ref": "tasks/exec.yml"
+  - "$ref": "tasks/local.yml"
+  - "$ref": "tasks/signal.yml"

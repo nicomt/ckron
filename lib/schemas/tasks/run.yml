@@ -1,0 +1,28 @@
+type: object
+title: Run Task
+required:
+  - type
+  - image
+properties:
+  type:
+    type: string
+    const: run
+  image:
+    type: string
+  command:
+    "$ref": "../definitions.yml#/string_or_list"
+  environment:
+    "$ref": "../definitions.yml#/list_or_dict"
+  volumes:
+    "$ref": "../definitions.yml#/list_of_strings"
+  pull:
+    type: string
+    enum:
+      - missing
+      - always
+      - never
+    default: missing
+  auto_remove:
+    type: boolean
+    default: true
+additionalProperties: false

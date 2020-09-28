@@ -1,0 +1,14 @@
+type: object
+title: Local Task
+required:
+  - type
+  - command
+properties:
+  type:
+    type: string
+    const: local
+  name:
+    type: string
+  command:
+    type: string
+additionalProperties: false

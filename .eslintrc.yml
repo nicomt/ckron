@@ -1,0 +1,38 @@
+env:
+  node: true
+  es2020: true
+extends:
+  - eslint:recommended
+  - airbnb-base
+parserOptions:
+  ecmaVersion: 11
+  sourceType: module
+rules:
+  arrow-body-style: 'off'
+  comma-dangle: 'off'
+  import/no-unresolved: 'off'
+  import/extensions: 'off'
+  no-console: 'off'
+  no-await-in-loop: 'off'
+  no-loop-func: 'off'
+  no-plusplus: 'off'
+  no-multiple-empty-lines: 'off'
+  no-underscore-dangle: 'off'
+  lines-between-class-members: 'off'
+  object-curly-newline: 'off'
+  operator-linebreak: 'off'
+  padded-blocks: 'off'
+  prefer-arrow-callback: 'off'
+  space-before-blocks: 'off'
+  no-param-reassign: 'off'
+  no-restricted-syntax: 'off'
+  no-debugger: warn
+  no-unused-vars: warn
+  class-methods-use-this: warn
+  eqeqeq: [error, allow-null]
+  max-len: [error, 150]
+  radix: [error, as-needed]
+  arrow-parens: [error, as-needed, { requireForBlockBody: true }]
+  no-shadow:
+    - error
+    - allow: [resolve, reject]

@@ -1,0 +1,15 @@
+type: object
+title: Signal Task
+required:
+  - type
+  - container
+  - signal
+properties:
+  type:
+    type: string
+    const: signal
+  container:
+    type: string
+  signal:
+    type: string
+additionalProperties: false

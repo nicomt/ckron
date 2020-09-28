@@ -1,0 +1,28 @@
+type: object
+required:
+  - smtp_host
+  - to
+  - from
+properties:
+  type:
+    type: string
+    const: email
+  smtp_host:
+    type: string
+  smtp_port:
+    type: number
+    maximum: 65535
+    minimum: 0
+    default: 25
+  smtp_auth:
+    type: object
+    properties:
+      user:
+        type: string
+      pass:
+        type: string
+  to:
+    "$ref": "../definitions.yml#/string_or_list"
+  from:
+    type: string
+additionalProperties: false

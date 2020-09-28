@@ -1,0 +1,19 @@
+type: object
+required:
+  - schedule
+  - tasks
+properties:
+  schedule:
+    type: string
+  timezone:
+    type: string
+  enabled:
+    type: boolean
+    default: true
+  run_on_init:
+    type: boolean
+  on_error:
+    "$ref": "definitions.yml#/list_of_strings"
+  tasks:
+    "$ref": "definitions.yml#/list_of_strings"
+additionalProperties: false

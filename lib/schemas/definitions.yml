@@ -1,0 +1,20 @@
+list_of_strings:
+  type: array
+  items:
+    type: string
+  uniqueItems: true
+string_or_list:
+  oneOf:
+    - type: string
+    - "$ref": "#/list_of_strings"
+list_or_dict:
+  oneOf:
+    - type: object
+      patternProperties:
+        ".+":
+          type:
+            - string
+            - number
+            - 'null'
+      additionalProperties: false
+    - "$ref": "#/list_of_strings"

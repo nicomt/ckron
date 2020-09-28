@@ -1,0 +1,17 @@
+type: object
+title: Exec Task
+required:
+  - type
+  - command
+  - container
+properties:
+  type:
+    type: string
+    const: exec
+  command:
+    "$ref": "../definitions.yml#/string_or_list"
+  container:
+    type: string
+  environment:
+    "$ref": "../definitions.yml#/list_or_dict"
+additionalProperties: false

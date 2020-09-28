@@ -1,0 +1,182 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["tasks", "jobs", "notifiers"],
+    "properties": {
+        "prevent_overlap": { 
+            "type": "boolean" 
+        },
+        "tasks": {
+            "type": "object",
+            "patternProperties": {
+                "^[a-zA-Z0-9._-]+$": {
+                    "$ref": "#/definitions/task"
+                }
+            },
+            "additionalProperties": false
+        },
+        "jobs": {
+            "type": "object",
+            "patternProperties": {
+                "^[a-zA-Z0-9._-]+$": {
+                    "$ref": "#/definitions/job"
+                }
+            },
+            "additionalProperties": false
+        },
+        "notifiers": {
+            "type": "object",
+            "patternProperties": {
+                "^[a-zA-Z0-9._-]+$": {
+                    "$ref": "#/definitions/notifier"
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "definitions": {
+        "list_of_strings": {
+            "type": "array",
+            "items": {"type": "string"},
+            "uniqueItems": true
+        },
+        "string_or_list": {
+            "oneOf": [
+                {"type": "string"},
+                {"$ref": "#/definitions/list_of_strings"}
+            ]
+        },
+        "list_or_dict": {
+            "oneOf": [
+                {
+                    "type": "object",
+                    "patternProperties": {
+                        ".+": {
+                            "type": [ "string", "number", "null" ]
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {"$ref": "#/definitions/list_of_strings"}
+            ]
+        },
+        "run_task": {
+            "type": "object",
+            "title": "Run Task",
+            "required": [ "type", "image" ],
+            "properties": {
+                "type": { 
+                    "type": "string",
+                    "const": "run"
+                },
+                "image": { "type": "string" },
+                "command": {"$ref": "#/definitions/string_or_list"},
+                "environment": { "$ref": "#/definitions/list_or_dict" },
+                "volumes": { "$ref": "#/definitions/list_of_strings" },
+                "pull": { 
+                    "type": "string",
+                    "enum": ["missing", "always", "never"],
+                    "default": "missing"
+                }
+                
+            },
+            "additionalProperties": false
+        },
+        "exec_task": {
+            "type": "object",
+            "title": "Exec Task",
+            "required": [ "type", "command", "container" ],
+            "properties": {
+                "type": { 
+                    "type": "string",
+                    "const": "exec"
+                },
+                "command": {"$ref": "#/definitions/string_or_list"},
+                "container": { "type": "string" },
+                "environment": { "$ref": "#/definitions/list_or_dict" }
+                
+            },
+            "additionalProperties": false
+        },
+        "local_task": {
+            "type": "object",
+            "title": "Local Task",
+            "required": [ "type", "command" ],
+            "properties": {
+                "type": { 
+                    "type": "string",
+                    "const": "local"
+                },
+                "name": { "type": "string" },
+                "command": {"$ref": "#/definitions/string_or_list"}
+            },
+            "additionalProperties": false
+        },
+        "signal_task": {
+            "type": "object",
+            "title": "Signal Task",
+            "required": [ "type", "container", "signal" ],
+            "properties": {
+                "type": { 
+                    "type": "string",
+                    "const": "signal"
+                },
+                "name": { "type": "string" },
+                "container": { "type": "string" },
+                "signal": { "type": "string" }
+            },
+            "additionalProperties": false
+        },
+        "task": {
+            "oneOf": [
+                {"$ref": "#/definitions/run_task"},
+                {"$ref": "#/definitions/exec_task"},
+                {"$ref": "#/definitions/local_task"},
+                {"$ref": "#/definitions/signal_task"}
+            ]
+        },
+        "job": {
+            "type": "object",
+            "required": [ "schedule", "tasks" ],
+            "properties": {
+                "schedule": { "type": "string" },
+                "timezone": { "type": "string" },
+                "run_on_init": { "type": "boolean" },
+                "on_error": {"$ref": "#/definitions/string_or_list"},
+                "tasks": {"$ref": "#/definitions/string_or_list"}
+            },
+            "additionalProperties": false
+        },
+        "email_notifier": {
+            "type": "object",
+            "required": [ "smtp_host", "email_to", "email_from"],
+            "properties": {
+                "type": { 
+                    "type": "string",
+                    "const": "email"
+                },
+                "smtp_host": { "type": "string" },
+                "smtp_port": { 
+                    "type": "number",
+                    "maximum": 65535,
+                    "minimum": 0 
+                },
+                "smtp_auth": { 
+                    "type": "object",
+                    "properties": {
+                        "user": { "type": "string" },
+                        "pass": { "type": "string" }
+                    }
+                 },
+                "email_to": { "$ref": "#/definitions/string_or_list" },
+                "email_from": { "type": "string" }
+            },
+            "additionalProperties": false
+        },
+        "notifier": {
+            "$ref": "#/definitions/email_notifier"
+        }
+    }
+}
+
