@@ -1,6 +1,6 @@
 # Ckron Scheduler
 
-[![NPM Version](http://img.shields.io/npm/v/ckron)](https://www.npmjs.org/package/ckron)
+[![NPM Version](https://img.shields.io/npm/v/ckron)](https://www.npmjs.org/package/ckron)
 [![GitHub License](https://img.shields.io/github/license/nicomt/ckron)](https://github.com/nicomt/ckron/blob/master/license.md)
 [![Docker Image Size](https://img.shields.io/docker/image-size/nicomt/ckron/latest)](https://hub.docker.com/r/nicomt/ckron)
 
