@@ -36,7 +36,7 @@
     "files": [
       "test/**/*",
       "!test/mock",
-      "!test/util.js"
+      "!test/docker-util.js"
     ]
   }
 }

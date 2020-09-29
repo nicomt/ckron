@@ -47,6 +47,13 @@ class TestUtil {
     const container = this.docker.getContainer(id);
     await container.remove();
   }
+
+  async runContainer(opt) {
+    const container = await this.docker.createContainer(opt);
+    await container.start();
+    return container;
+  }
+
 }
 
 module.exports = new TestUtil();
