@@ -1,11 +1,11 @@
 const path = require('path');
 const test = require('ava');
-const util = require('../util');
+const util = require('../docker-util');
 const MockLog = require('../mock/log');
 const RunTask = require('../../lib/tasks/run');
 
 
-test('run simple', async (t) => {
+test('run: simple', async (t) => {
   const log = new MockLog();
   const task = new RunTask('test', {
     image: 'busybox',
@@ -18,7 +18,7 @@ test('run simple', async (t) => {
 });
 
 
-test('run environment', async (t) => {
+test('run: environment', async (t) => {
   const log = new MockLog();
   const task = new RunTask('test', {
     image: 'busybox',
@@ -34,7 +34,7 @@ test('run environment', async (t) => {
 });
 
 
-test('run mount', async (t) => {
+test('run: mount', async (t) => {
   const log = new MockLog();
   const task = new RunTask('test', {
     image: 'busybox',
@@ -50,7 +50,7 @@ test('run mount', async (t) => {
 });
 
 
-test('run auto remove enabled', async (t) => {
+test('run: auto remove enabled', async (t) => {
   const log = new MockLog();
   const task = new RunTask('test', {
     image: 'busybox',
@@ -62,7 +62,7 @@ test('run auto remove enabled', async (t) => {
   t.false(await util.containerExists(containerId), `Container ${containerId} must be deleted when auto_remove is true`);
 });
 
-test('run auto remove disabled', async (t) => {
+test('run: auto remove disabled', async (t) => {
   const log = new MockLog();
   const task = new RunTask('test', {
     image: 'busybox',
@@ -75,7 +75,7 @@ test('run auto remove disabled', async (t) => {
 });
 
 // Running all pull test in sequentially to avoid interference with the hello-world image
-test('run pull', async (t) => {
+test('run: pull', async (t) => {
   const log = new MockLog();
 
   try {
