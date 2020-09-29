@@ -83,6 +83,7 @@ Runs a new command in a running container
 | Property | Description | Required |
 |-|-|-|
 | [`container`](#container) | Container name or container id | Yes |
+| [`environment`](#environment) | Add environment variables | No |
 | [`command`](#command) | Command to execute inside the container | Yes |
 
 
@@ -92,6 +93,21 @@ Container name or container id of the container were the command should be execu
 ```yml
 container: my_container
 container: c9b92d9a79d3
+```
+
+#### **environment**
+Add environment variables. You can use either an array or a dictionary. Any boolean values (true, false, yes, no) need to be enclosed in quotes to ensure they are not converted to True or False by the YML parser.
+
+```yml
+environment:
+  RACK_ENV: development
+  SHOW: 'true'
+  SESSION_SECRET:
+
+environment:
+  - RACK_ENV=development
+  - SHOW=true
+  - SESSION_SECRET
 ```
 
 #### **command**
