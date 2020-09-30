@@ -15,6 +15,7 @@ program
       const scheduler = new Ckron();
       await scheduler.loadConfig(cmd.config);
       scheduler.start();
+      scheduler.startServer();
     } catch (err) {
       console.error(err.message || err);
       process.exitCode = 1;
