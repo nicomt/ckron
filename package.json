@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node ./bin/cli.js",
-    "test": "ava"
+    "test": "ava -T 5m"
   },
   "author": "Nicolas Martinez",
   "license": "ISC",
@@ -24,7 +24,8 @@
     "hashids": "^2.2.1",
     "js-yaml": "^3.14.0",
     "nodemailer": "^6.4.11",
-    "shlex": "^2.0.2"
+    "shlex": "^2.0.2",
+    "stream-to-string": "^1.2.0"
   },
   "devDependencies": {
     "ava": "^3.13.0",

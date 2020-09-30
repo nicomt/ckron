@@ -1,4 +1,6 @@
+const { PassThrough } = require('stream');
 const Docker = require('dockerode');
+const streamToString = require('stream-to-string');
 
 class TestUtil {
   constructor() {
@@ -48,8 +50,20 @@ class TestUtil {
     await container.remove();
   }
 
-  async runContainer(opt) {
+  async runContainer(opt, attach = false) {
     const container = await this.docker.createContainer(opt);
+
+    if (attach) {
+      const stream = await container.attach({
+        stream: true,
+        stdout: true,
+        stderr: true
+      });
+      const through = new PassThrough();
+      stream.on('end', () => through.end());
+      this.docker.modem.demuxStream(stream, through, through);
+      container.output = streamToString(through).then(s => s.trim());
+    }
     await container.start();
     return container;
   }

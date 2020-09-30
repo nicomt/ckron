@@ -4,6 +4,9 @@ const util = require('../docker-util');
 const MockLog = require('../mock/log');
 const RunTask = require('../../lib/tasks/run');
 
+async function sleep(ms) {
+  return new Promise(res => setTimeout(res, ms));
+}
 
 test('run: simple', async (t) => {
   const log = new MockLog();
@@ -13,6 +16,7 @@ test('run: simple', async (t) => {
   });
 
   const { exitCode, output } = await task.execute(log);
+  t.is(task.name, 'test');
   t.is(exitCode, 0);
   t.is(output, 'hello world');
 });
@@ -59,6 +63,7 @@ test('run: auto remove enabled', async (t) => {
   });
 
   const { containerId } = await task.execute(log);
+  await sleep(5000);
   t.false(await util.containerExists(containerId), `Container ${containerId} must be deleted when auto_remove is true`);
 });
 
@@ -71,6 +76,7 @@ test('run: auto remove disabled', async (t) => {
   });
 
   const { containerId } = await task.execute(log);
+  await sleep(5000);
   t.true(await util.containerExists(containerId), `Container ${containerId} should not be deleted when auto_remove is false`);
 });
 
