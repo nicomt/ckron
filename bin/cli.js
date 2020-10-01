@@ -23,6 +23,12 @@ program
 
 program.parse(process.argv);
 
+process.on('SIGINT', () => {
+  console.info('Interrupted');
+  process.exit(0);
+});
+
+
 
 
 
