@@ -1,6 +1,6 @@
 {
   "name": "ckron",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": "github:nicomt/ckron",
   "description": "",
   "main": "main.js",
