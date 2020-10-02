@@ -10,11 +10,14 @@ async function setup(signal) {
   const program = `
   let signal = false;
   setTimeout(() => {
-    if(!signal) console.log('fail')
+    process.stdout.write('fail', () =>{
+      process.exit(1);
+    })
   }, 3000);
   process.on('${signal}', () => {
-    signal = true;
-    console.log('success');
+    process.stdout.write('success', () =>{
+      process.exit(0);
+    })
   });`;
 
   await dockerUtil.pullImage('node:14-alpine');
