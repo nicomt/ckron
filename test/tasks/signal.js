@@ -13,7 +13,7 @@ async function setup(signal) {
     process.stdout.write('fail', () =>{
       process.exit(1);
     })
-  }, 3000);
+  }, 30000);
   process.on('${signal}', () => {
     process.stdout.write('success', () =>{
       process.exit(0);
