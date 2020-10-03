@@ -1,12 +1,12 @@
 # ckron
 
 [![NPM Version](https://img.shields.io/npm/v/ckron)](https://www.npmjs.org/package/ckron)
-[![GitHub License](https://img.shields.io/github/license/nicomt/ckron)](https://github.com/nicomt/ckron/blob/master/license.md)
+[![Test](https://github.com/nicomt/ckron/workflows/Test/badge.svg)](https://github.com/nicomt/ckron/actions)
 [![Docker Image Size](https://img.shields.io/docker/image-size/nicomt/ckron/latest)](https://hub.docker.com/r/nicomt/ckron)
 
 > A cron-style job scheduler for docker
 
-`ckron` is a tool to schedule operations on containerized applications.
+`ckron` is a versatile and straightforward tool to schedule operations on containerized applications.
 
 `ckron` is heavily inspired by [ofelia](https://github.com/mcuadros/ofelia) but attempts to improve on it by allowing multiple [tasks](#tasks) per `job`. Using `tasks`, you can compose complex workflows with a few off-the-shelf images and follow Docker's motto of one process per container.
 
