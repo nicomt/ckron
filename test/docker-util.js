@@ -52,10 +52,10 @@ class TestUtil {
 
   async runContainer(opt, attach = false) {
     const container = await this.docker.createContainer(opt);
-
+    await container.start();
     if (attach) {
-      const stream = await container.attach({
-        stream: true,
+      const stream = await container.logs({
+        follow: true,
         stdout: true,
         stderr: true
       });
@@ -64,7 +64,6 @@ class TestUtil {
       this.docker.modem.demuxStream(stream, through, through);
       container.output = streamToString(through).then(s => s.trim());
     }
-    await container.start();
     return container;
   }
 

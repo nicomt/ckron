@@ -7,24 +7,11 @@ const log = new MockLog();
 
 
 async function setup(signal) {
-  const program = `
-  let signal = false;
-  setTimeout(() => {
-    process.stdout.write('fail', () =>{
-      process.exit(1);
-    })
-  }, 30000);
-  process.on('${signal}', () => {
-    process.stdout.write('success', () =>{
-      process.exit(0);
-    })
-  });`;
-
-  await dockerUtil.pullImage('node:14-alpine');
+  await dockerUtil.pullImage('busybox');
   const container = await dockerUtil.runContainer({
-    Image: 'node:14-alpine',
-    Entrypoint: ['node', '-e'],
-    Cmd: [program],
+    Image: 'busybox',
+    Entrypoint: ['sh', '-c'],
+    Cmd: [`trap "echo success" ${signal}; sleep 10`],
     HostConfig: {
       AutoRemove: true
     }
