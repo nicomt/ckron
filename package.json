@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node ./bin/cli.js",
-    "test": "ava -T 5m"
+    "test": "ava -T 5m",
+    "lint": "eslint ."
   },
   "author": "Nicolas Martinez",
   "license": "ISC",
