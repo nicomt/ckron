@@ -1,6 +1,6 @@
 const path = require('path');
 const test = require('ava');
-const util = require('../docker-util');
+const dockerUtil = require('../util/docker');
 const MockLog = require('../mock/log');
 const RunTask = require('../../lib/tasks/run');
 
@@ -62,7 +62,7 @@ test('run: auto remove enabled', async (t) => {
 
   const { containerId } = await task.execute(log);
   await sleep(5000);
-  t.false(await util.containerExists(containerId), `Container ${containerId} must be deleted when auto_remove is true`);
+  t.false(await dockerUtil.containerExists(containerId), `Container ${containerId} must be deleted when auto_remove is true`);
 });
 
 
@@ -75,7 +75,7 @@ test('run: auto remove disabled', async (t) => {
 
   const { containerId } = await task.execute(log);
   await sleep(5000);
-  t.true(await util.containerExists(containerId), `Container ${containerId} should not be deleted when auto_remove is false`);
+  t.true(await dockerUtil.containerExists(containerId), `Container ${containerId} should not be deleted when auto_remove is false`);
 });
 
 
@@ -86,7 +86,7 @@ test('run: pull missing', async (t) => {
     pull: 'missing'
   });
 
-  await util.removeImage('nicomt/test:test1');
+  await dockerUtil.removeImage('nicomt/test:test1');
 
   const start1 = Date.now();
   const { exitCode: ec1 } = await task.execute(log);
@@ -107,7 +107,7 @@ test('run: pull never', async (t) => {
     pull: 'never'
   });
 
-  await util.removeImage('nicomt/test:test2');
+  await dockerUtil.removeImage('nicomt/test:test2');
   try {
     await task.execute(log);
     t.fail('Task should fail if no image available and pull never');
@@ -116,7 +116,7 @@ test('run: pull never', async (t) => {
 
   t.is(task.lastPull, 0);
 
-  await util.pullImage('nicomt/test:test2');
+  await dockerUtil.pullImage('nicomt/test:test2');
   const { exitCode } = await task.execute(log);
   t.is(exitCode, 0);
   t.is(task.lastPull, 0);
@@ -129,7 +129,7 @@ test('run: pull', async (t) => {
     pull: 'always'
   });
 
-  await util.removeImage('nicomt/test:test3');
+  await dockerUtil.removeImage('nicomt/test:test3');
   const start1 = Date.now();
   const { exitCode: ec1 } = await task.execute(log);
   t.is(ec1, 0);

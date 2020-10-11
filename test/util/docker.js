@@ -2,7 +2,7 @@ const { PassThrough } = require('stream');
 const Docker = require('dockerode');
 const streamToString = require('stream-to-string');
 
-class TestUtil {
+class DockerUtil {
   constructor() {
     this.docker = new Docker();
   }
@@ -69,4 +69,4 @@ class TestUtil {
 
 }
 
-module.exports = new TestUtil();
+module.exports = new DockerUtil();

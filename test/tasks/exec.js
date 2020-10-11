@@ -1,5 +1,5 @@
 const test = require('ava');
-const dockerUtil = require('../docker-util');
+const dockerUtil = require('../util/docker');
 const MockLog = require('../mock/log');
 const ExecTask = require('../../lib/tasks/exec');
 
