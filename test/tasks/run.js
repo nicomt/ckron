@@ -180,4 +180,25 @@ test('run: nonexistent user', async (t) => {
   t.pass();
 });
 
+test('run: default workingdir', async (t) => {
+  const task = new RunTask('test', {
+    image: 'busybox',
+    command: 'pwd'
+  });
 
+  const { exitCode, output } = await task.execute(log);
+  t.is(exitCode, 0);
+  t.is(output, '/');
+});
+
+test('run: custom workingdir', async (t) => {
+  const task = new RunTask('test', {
+    image: 'busybox',
+    command: 'pwd',
+    working_dir: '/tmp'
+  });
+
+  const { exitCode, output } = await task.execute(log);
+  t.is(exitCode, 0);
+  t.is(output, '/tmp');
+});
