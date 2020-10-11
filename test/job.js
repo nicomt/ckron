@@ -51,5 +51,19 @@ test('job: failure notifier', async (t) => {
   t.is(notifier1.notifyBody, 'expected fail');
 });
 
+test('job: strip ansi before notify', async (t) => {
+  const task1 = new MockFailTask('task1', '\u001b[31mtest\u001b[39m');
+  const notifier1 = new MockNotifier('notifier1');
+  const job = new Job('test', {
+    schedule: '* * * * *',
+    tasks: ['task1'],
+    on_error: ['notifier1']
+  }, { task1 }, { notifier1 });
+
+  const success = await job.run();
+  t.assert(!success);
+  t.is(notifier1.notifyBody, 'test');
+});
+
 
 

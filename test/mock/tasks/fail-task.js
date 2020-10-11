@@ -2,14 +2,15 @@
 /* eslint-disable no-unused-vars */
 
 class MockFailTask {
-  constructor(name) {
+  constructor(name, message = 'expected fail') {
     this.name = name;
+    this.message = message;
     this.executionTimes = 0;
   }
 
   async execute(log) {
     this.executionTimes++;
-    throw new Error('expected fail');
+    throw new Error(this.message);
   }
 }
 
