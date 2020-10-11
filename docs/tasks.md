@@ -18,6 +18,7 @@ runs a command inside of a new container, using a specific image.
 | [`volumes`](#volumes) | Volumes to mount into the container | No |
 | [`command`](#command) | Override the default image command | No |
 | [`user`](#user) | User to run the command as | No |
+| [`working_dir`](#working_dir) | Working directory for the command | No |
 
 
 #### **image**
@@ -82,6 +83,13 @@ User to run the command as.
 
 ```yml
 user: nobody
+```
+
+#### **working_dir**
+Working directory for the command.
+
+```yml
+working_dir: /tmp
 ```
 
 ## `Exec Task`
