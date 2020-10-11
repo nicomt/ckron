@@ -17,6 +17,7 @@ runs a command inside of a new container, using a specific image.
 | [`environment`](#environment) | Add environment variables | No |
 | [`volumes`](#volumes) | Volumes to mount into the container | No |
 | [`command`](#command) | Override the default image command | No |
+| [`user`](#user) | User to run the command as | No |
 
 
 #### **image**
@@ -74,6 +75,13 @@ Override the default image command. The command can also be a list
 ```yml
 command: touch /tmp/example
 command: ["touch", "/tmp/example"]
+```
+
+#### **user**
+User to run the command as.
+
+```yml
+user: nobody
 ```
 
 ## `Exec Task`

@@ -141,4 +141,43 @@ test('run: pull', async (t) => {
   t.true(task.lastPull > start2, 'Image should always be pulled');
 });
 
+test('run: default user', async (t) => {
+  const task = new RunTask('test', {
+    image: 'busybox',
+    command: 'whoami'
+  });
+
+  const { exitCode, output } = await task.execute(log);
+  t.is(exitCode, 0);
+  t.is(output, 'root');
+});
+
+test('run: custom user', async (t) => {
+  const task = new RunTask('test', {
+    image: 'busybox',
+    command: 'whoami',
+    user: 'nobody'
+  });
+
+  const { exitCode, output } = await task.execute(log);
+  t.is(exitCode, 0);
+  t.is(output, 'nobody');
+});
+
+test('run: nonexistent user', async (t) => {
+  const task = new RunTask('test', {
+    image: 'busybox',
+    command: 'whoami',
+    user: 'notauser'
+  });
+
+  try {
+    await task.execute(log);
+    t.fail('Task should fail if user exists');
+    // eslint-disable-next-line no-empty
+  } catch (err) {}
+
+  t.pass();
+});
+
 

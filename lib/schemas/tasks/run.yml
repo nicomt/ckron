@@ -11,6 +11,8 @@ properties:
     type: string
   command:
     "$ref": "../definitions.yml#/string_or_list"
+  user:
+    type: string
   environment:
     "$ref": "../definitions.yml#/list_or_dict"
   volumes:
