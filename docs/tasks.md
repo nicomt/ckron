@@ -13,10 +13,12 @@ runs a command inside of a new container, using a specific image.
 |-|-|-|
 | [`image`](#image) | Docker image to use | Yes |
 | [`pull`](#pull) | Pull image before executing task | No |
-| [`auto_remove`](#pull) | Remove container after task is finished | No |
+| [`auto_remove`](#auto_remove) | Remove container after task is finished | No |
 | [`environment`](#environment) | Add environment variables | No |
 | [`volumes`](#volumes) | Volumes to mount into the container | No |
 | [`command`](#command) | Override the default image command | No |
+| [`user`](#user) | User to run the command as | No |
+| [`working_dir`](#working_dir) | Working directory for the command | No |
 
 
 #### **image**
@@ -37,7 +39,7 @@ pull: never # Don't pull image automatically
 pull: missing # Pull image if not found locally
 ```
 
-#### **pull**
+#### **auto_remove**
 Remove container after task is finished. Default value is `true`
 
 ```yml
@@ -74,6 +76,20 @@ Override the default image command. The command can also be a list
 ```yml
 command: touch /tmp/example
 command: ["touch", "/tmp/example"]
+```
+
+#### **user**
+User to run the command as.
+
+```yml
+user: nobody
+```
+
+#### **working_dir**
+Working directory for the command.
+
+```yml
+working_dir: /tmp
 ```
 
 ## `Exec Task`

@@ -17,12 +17,20 @@ program
       scheduler.start();
       scheduler.startServer();
     } catch (err) {
-      console.error(err.message || err);
-      process.exitCode = 1;
+      process.stderr.write(`${err.message || err.toString()}\n`, () => {
+        process.exit(1);
+      });
     }
   });
 
 program.parse(process.argv);
+
+process.on('SIGINT', () => {
+  process.stdout.write('Interrupted\n', () => {
+    process.exit(0);
+  });
+});
+
 
 
 

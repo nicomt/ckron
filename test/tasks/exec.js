@@ -1,5 +1,5 @@
 const test = require('ava');
-const dockerUtil = require('../docker-util');
+const dockerUtil = require('../util/docker');
 const MockLog = require('../mock/log');
 const ExecTask = require('../../lib/tasks/exec');
 
@@ -26,6 +26,7 @@ test('exec: simple', async (t) => {
   });
 
   const { exitCode, output } = await task.execute(log);
+  t.is(task.name, 'test');
   t.is(exitCode, 0);
   t.is(output, 'hello world');
   await container.stop();

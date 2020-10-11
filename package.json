@@ -1,6 +1,6 @@
 {
   "name": "ckron",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": "github:nicomt/ckron",
   "description": "",
   "main": "main.js",
@@ -8,8 +8,9 @@
     "ckron": "bin/cli.js"
   },
   "scripts": {
-    "start": "node ./bin/cli.js daemon",
-    "test": "ava"
+    "start": "node ./bin/cli.js",
+    "test": "ava",
+    "lint": "eslint ."
   },
   "author": "Nicolas Martinez",
   "license": "ISC",
@@ -26,7 +27,9 @@
     "js-yaml": "^3.14.0",
     "koa": "^2.13.0",
     "nodemailer": "^6.4.11",
-    "shlex": "^2.0.2"
+    "shlex": "^2.0.2",
+    "stream-to-string": "^1.2.0",
+    "strip-ansi": "^6.0.0"
   },
   "devDependencies": {
     "ava": "^3.13.0",
@@ -38,7 +41,7 @@
     "files": [
       "test/**/*",
       "!test/mock",
-      "!test/docker-util.js"
+      "!test/util"
     ]
   }
 }
