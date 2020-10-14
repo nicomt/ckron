@@ -2,6 +2,7 @@
   "name": "ckron",
   "version": "0.1.3",
   "repository": "github:nicomt/ckron",
+  "keywords": ["docker", "ckron", "scheduler", "job"],
   "description": "",
   "main": "main.js",
   "bin": {

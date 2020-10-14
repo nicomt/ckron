@@ -1,10 +1,10 @@
 # ckron
 
+> A cron-style job scheduler for docker
+
 [![NPM Version](https://img.shields.io/npm/v/ckron)](https://www.npmjs.org/package/ckron)
 [![Test](https://github.com/nicomt/ckron/workflows/Test/badge.svg)](https://github.com/nicomt/ckron/actions)
 [![Docker Image Size](https://img.shields.io/docker/image-size/nicomt/ckron/latest)](https://hub.docker.com/r/nicomt/ckron)
-
-> A cron-style job scheduler for docker
 
 `ckron` is a versatile and straightforward tool to schedule operations on containerized applications.
 
