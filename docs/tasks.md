@@ -99,8 +99,10 @@ Runs a new command in a running container
 | Property | Description | Required |
 |-|-|-|
 | [`container`](#container) | Container name or container id | Yes |
-| [`environment`](#environment) | Add environment variables | No |
 | [`command`](#command) | Command to execute inside the container | Yes |
+| [`environment`](#environment) | Add environment variables | No |
+| [`working_dir`](#working_dir) | Working directory for the command | No |
+
 
 
 #### **container**
@@ -155,4 +157,11 @@ Signal to send to the process.
 
 ```yml
 signal: SIGHUP
+```
+
+#### **working_dir**
+Working directory for the command.
+
+```yml
+working_dir: /tmp
 ```
