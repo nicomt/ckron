@@ -32,7 +32,6 @@ test('exec: simple', async (t) => {
   await container.stop();
 });
 
-
 test('exec: environment', async (t) => {
   const container = await setup();
   const task = new ExecTask('test', {
@@ -49,7 +48,6 @@ test('exec: environment', async (t) => {
   await container.stop();
 });
 
-
 test('exec: invalid container', async (t) => {
   const task = new ExecTask('test', {
     container: '---',
@@ -62,4 +60,31 @@ test('exec: invalid container', async (t) => {
   } catch (error) {
     t.is(error.reason, 'no such container');
   }
+});
+
+test('exec: default workingdir', async (t) => {
+  const container = await setup();
+  const task = new ExecTask('test', {
+    container: container.id,
+    command: 'pwd'
+  });
+
+  const { exitCode, output } = await task.execute(log);
+  t.is(exitCode, 0);
+  t.is(output, '/');
+  await container.stop();
+});
+
+test('exec: custom workingdir', async (t) => {
+  const container = await setup();
+  const task = new ExecTask('test', {
+    container: container.id,
+    command: 'pwd',
+    working_dir: '/tmp'
+  });
+
+  const { exitCode, output } = await task.execute(log);
+  t.is(exitCode, 0);
+  t.is(output, '/tmp');
+  await container.stop();
 });

@@ -12,6 +12,8 @@ properties:
     "$ref": "../definitions.yml#/string_or_list"
   container:
     type: string
+  working_dir:
+    type: string
   environment:
     "$ref": "../definitions.yml#/list_or_dict"
 additionalProperties: false
