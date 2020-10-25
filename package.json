@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node ./bin/cli.js",
-    "test": "ava",
+    "test": "ava -T 1m --verbose",
     "lint": "eslint ."
   },
   "author": "Nicolas Martinez",

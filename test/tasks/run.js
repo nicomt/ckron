@@ -2,6 +2,7 @@ const path = require('path');
 const test = require('ava');
 const dockerUtil = require('../util/docker');
 const MockLog = require('../mock/log');
+const util = require('../../lib/util');
 const RunTask = require('../../lib/tasks/run');
 
 const log = new MockLog();
@@ -201,4 +202,16 @@ test('run: custom workingdir', async (t) => {
   const { exitCode, output } = await task.execute(log);
   t.is(exitCode, 0);
   t.is(output, '/tmp');
+});
+
+test('run: very long output', async (t) => {
+  const task = new RunTask('test', {
+    image: 'busybox',
+    command: 'sh -c "yes 0123456789 | head -1000000"'
+  });
+
+  const { exitCode, output } = await task.execute(log);
+  t.is(task.name, 'test');
+  t.is(exitCode, 0);
+  t.true(output.length <= util.MAX_OUTPUT_BUFFER_SIZE);
 });
