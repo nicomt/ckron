@@ -7,4 +7,6 @@ properties:
     const: slack
   webhook_url:
     type: string
+    format: uri
+    pattern: ^(https?)://
 additionalProperties: false

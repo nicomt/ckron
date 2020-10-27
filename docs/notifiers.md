@@ -1,6 +1,7 @@
 # Notifier Reference
 
 - [Email Notifier](#email-notifier)
+- [Slack Notifier](#slack-notifier)
 
 ## Email Notifier
 
@@ -50,4 +51,21 @@ Recipients email addresses
 
 ```yml
 to: dev@example.com
+```
+
+
+## Slack Notifier
+
+Sends slack notifications to selected webhook
+
+| Property | Description | Required |
+|-|-|-|
+| [`webhook_url`](#smtp_host) | Slack Webhook to post messages to | Yes |
+
+
+### **webhook_url**
+Webhook URL to send messages to. You can read more about how to set up a webhook [here](https://api.slack.com/messaging/webhooks)
+
+```yml
+webhook_url: https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
 ```
