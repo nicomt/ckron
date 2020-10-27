@@ -25,6 +25,7 @@
     "fs-extra": "^9.0.1",
     "hashids": "^2.2.1",
     "js-yaml": "^3.14.0",
+    "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.12",
     "shlex": "^2.0.2",
     "stream-to-string": "^1.2.0",
