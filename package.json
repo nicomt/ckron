@@ -23,7 +23,7 @@
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.6",
     "@slack/webhook": "^5.0.3",
-    "ajv": "^6.12.5",
+    "ajv": "^6.12.6",
     "chalk": "^4.1.0",
     "commander": "^6.1.0",
     "cron": "^1.8.2",
