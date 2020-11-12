@@ -4,7 +4,8 @@
   "repository": "github:nicomt/ckron",
   "keywords": [
     "docker",
-    "ckron",
+    "cron",
+    "cronjob",
     "scheduler",
     "job"
   ],
