@@ -28,7 +28,7 @@
     "commander": "^6.1.0",
     "cron": "^1.8.2",
     "dockerode": "^3.2.1",
-    "hashids": "^2.2.1",
+    "hashids": "^2.2.2",
     "js-yaml": "^3.14.0",
     "nodemailer": "^6.4.14",
     "shlex": "^2.0.2",
