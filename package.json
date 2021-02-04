@@ -25,7 +25,7 @@
     "@slack/webhook": "^5.0.4",
     "ajv": "^6.12.6",
     "chalk": "^4.1.0",
-    "commander": "^6.1.0",
+    "commander": "^6.2.0",
     "cron": "^1.8.2",
     "dockerode": "^3.2.1",
     "hashids": "^2.2.1",
