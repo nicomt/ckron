@@ -24,7 +24,7 @@
     "@apidevtools/json-schema-ref-parser": "^9.0.6",
     "@slack/webhook": "^5.0.4",
     "ajv": "^6.12.6",
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.1",
     "commander": "^6.2.0",
     "cron": "^1.8.2",
     "dockerode": "^3.2.1",
