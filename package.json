@@ -30,7 +30,7 @@
     "commander": "^6.2.1",
     "cron": "^1.8.2",
     "dockerode": "^3.2.1",
-    "hashids": "^2.2.1",
+    "hashids": "^2.2.8",
     "js-yaml": "^3.14.1",
     "nodemailer": "^6.4.17",
     "shlex": "^2.0.2",
