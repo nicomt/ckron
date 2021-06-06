@@ -20,6 +20,7 @@ properties:
             type: string
           args:
             "$ref": "../definitions.yml#/list_or_dict"
+        additionalProperties: false
   command:
     "$ref": "../definitions.yml#/string_or_list"
   entrypoint:
