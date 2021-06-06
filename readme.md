@@ -35,7 +35,8 @@ $ docker run --rm -it \
       nicomt/ckron daemon
 ```
 
-For production is recommended to setup a service in something like [systemd](https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6), upstart or [forever](https://www.npmjs.com/package/forever). A service will ensure the daemon is restarted in case of an unexpected failure
+> **_NOTE:_** For production is recommended to use docker with a [restart policy](https://docs.docker.com/config/containers/start-containers-automatically/) or create a service in something like [systemd](https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6), upstart or [forever](https://www.npmjs.com/package/forever). A service will ensure the daemon is restarted in case of an unexpected failure
+
 
 ## Configuration
 The configuration consists of a YAML file, which is meant to have familiar `docker compose` like syntax. The main sections of the config file are the following:  
