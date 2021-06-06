@@ -9,6 +9,17 @@ properties:
     const: run
   image:
     type: string
+  build:
+    oneOf:
+      - type: string
+      - type: object
+        properties:
+          context:
+            type: string
+          dockerfile:
+            type: string
+          args:
+            "$ref": "../definitions.yml#/list_or_dict"
   command:
     "$ref": "../definitions.yml#/string_or_list"
   user:
