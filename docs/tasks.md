@@ -18,6 +18,7 @@ runs a command inside of a new container, using a specific image.
 | [`auto_remove`](#auto_remove) | Remove container after task is finished | No |
 | [`environment`](#environment) | Add environment variables | No |
 | [`volumes`](#volumes) | Volumes to mount into the container | No |
+| [`entrypoint`](#entrypoint) | Override the default entrypoint | No |
 | [`command`](#command) | Override the default image command | No |
 | [`user`](#user) | User to run the command as | No |
 | [`working_dir`](#working_dir) | Working directory for the command | No |
@@ -90,6 +91,13 @@ Bind mount host machine directory into the container. It uses `SOURCE:TARGET[:MO
 volumes:
   - /opt/data:/var/lib/mysql
   - /etc/config:/etc/config:ro
+```
+#### **entrypoint**
+Override the default entrypoint. The entrypoint can also be a list
+
+```yml
+entrypoint: /code/entrypoint.sh
+entrypoint: ["php", "-d", "memory_limit=-1", "vendor/bin/phpunit"]
 ```
 
 #### **command**
