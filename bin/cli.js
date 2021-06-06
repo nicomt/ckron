@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const commander = require('commander');
+const betterAjvErrors = require('better-ajv-errors');
 const Ckron = require('../lib/ckron');
 const { version } = require('../package.json');
 
@@ -16,9 +17,21 @@ program
       await scheduler.loadConfig(cmd.config);
       scheduler.start();
     } catch (err) {
-      process.stderr.write(`${err.message || err.toString()}\n`, () => {
-        process.exit(1);
-      });
+      if (err.code === 'CONFIG_SYNTAX') {
+        const output = betterAjvErrors(
+          err.validationSchema,
+          err.validationData,
+          [err.validationErrors[0]],
+          { indent: 2 }
+        );
+        process.stderr.write(output, () => {
+          process.exit(1);
+        });
+      } else {
+        process.stderr.write(`${err.message || err.toString()}\n`, () => {
+          process.exit(1);
+        });
+      }
     }
   });
 

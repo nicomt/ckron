@@ -12,17 +12,20 @@ runs a command inside of a new container, using a specific image.
 | Property | Description | Required |
 |-|-|-|
 | [`image`](#image) | Docker image to use | Yes |
+| [`build`](#build) | Options for building a docker image | No |
+| [`update`](#update) | Pull or build image before executing task | No |
 | [`pull`](#pull) | Pull image before executing task | No |
 | [`auto_remove`](#auto_remove) | Remove container after task is finished | No |
 | [`environment`](#environment) | Add environment variables | No |
 | [`volumes`](#volumes) | Volumes to mount into the container | No |
+| [`entrypoint`](#entrypoint) | Override the default entrypoint | No |
 | [`command`](#command) | Override the default image command | No |
 | [`user`](#user) | User to run the command as | No |
 | [`working_dir`](#working_dir) | Working directory for the command | No |
 
 
 #### **image**
-Specify the image to start the container from.
+Specify the image to start the container from. If you specify build, ckron uses this value as the name for the built image 
 ```yml
 image: redis
 image: ubuntu:18.04
@@ -31,7 +34,27 @@ image: example-registry.com:4000/postgresql
 image: a4bc65f
 ```
 
+#### **build**
+Configuration options for building a docker image for use in the run task 
+```yml
+build: ./dir
+build:
+  context: ./dir
+  dockerfile: Dockerfile-alternate
+  args:
+    buildno: 1
+```
+
+#### **update**
+Pull or build image before executing task. Default value is *missing* 
+```yml
+update: always # Always update before executing task
+update: never # Don't update image automatically
+update: missing # Pull or build image if not found locally
+```
+
 #### **pull**
+**Deprecated**: use [update](#update) instead
 Pull image before executing task. Default value is *missing* 
 ```yml
 pull: always # Always pull before executing task
@@ -68,6 +91,13 @@ Bind mount host machine directory into the container. It uses `SOURCE:TARGET[:MO
 volumes:
   - /opt/data:/var/lib/mysql
   - /etc/config:/etc/config:ro
+```
+#### **entrypoint**
+Override the default entrypoint. The entrypoint can also be a list
+
+```yml
+entrypoint: /code/entrypoint.sh
+entrypoint: ["php", "-d", "memory_limit=-1", "vendor/bin/phpunit"]
 ```
 
 #### **command**
