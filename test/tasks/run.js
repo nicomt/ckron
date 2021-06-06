@@ -23,6 +23,17 @@ test('run: simple', async (t) => {
   t.is(output, 'hello world');
 });
 
+test('run: entrypoint', async (t) => {
+  const task = new RunTask('test', {
+    image: 'busybox',
+    entrypoint: 'echo',
+    command: '"hello world"'
+  });
+
+  const { exitCode, output } = await task.execute(log);
+  t.is(exitCode, 0);
+  t.is(output, 'hello world');
+});
 
 test('run: environment', async (t) => {
   const task = new RunTask('test', {
