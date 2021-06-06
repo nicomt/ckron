@@ -12,6 +12,8 @@ runs a command inside of a new container, using a specific image.
 | Property | Description | Required |
 |-|-|-|
 | [`image`](#image) | Docker image to use | Yes |
+| [`build`](#build) | Options for building a docker image | No |
+| [`update`](#update) | Pull or build image before executing task | No |
 | [`pull`](#pull) | Pull image before executing task | No |
 | [`auto_remove`](#auto_remove) | Remove container after task is finished | No |
 | [`environment`](#environment) | Add environment variables | No |
@@ -22,7 +24,7 @@ runs a command inside of a new container, using a specific image.
 
 
 #### **image**
-Specify the image to start the container from.
+Specify the image to start the container from. If you specify build, ckron uses this value as the name for the built image 
 ```yml
 image: redis
 image: ubuntu:18.04
@@ -31,7 +33,27 @@ image: example-registry.com:4000/postgresql
 image: a4bc65f
 ```
 
+#### **build**
+Configuration options for building a docker image for use in the run task 
+```yml
+build: ./dir
+build:
+  context: ./dir
+  dockerfile: Dockerfile-alternate
+  args:
+    buildno: 1
+```
+
+#### **update**
+Pull or build image before executing task. Default value is *missing* 
+```yml
+update: always # Always update before executing task
+update: never # Don't update image automatically
+update: missing # Pull or build image if not found locally
+```
+
 #### **pull**
+**Deprecated**: use [update](#update) instead
 Pull image before executing task. Default value is *missing* 
 ```yml
 pull: always # Always pull before executing task
