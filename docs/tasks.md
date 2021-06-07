@@ -132,6 +132,7 @@ Runs a new command in a running container
 | [`command`](#command) | Command to execute inside the container | Yes |
 | [`environment`](#environment) | Add environment variables | No |
 | [`working_dir`](#working_dir) | Working directory for the command | No |
+| [`user`](#user) | User to execute as | No |
 
 
 
@@ -164,6 +165,13 @@ Command to execute inside the container. The command can also be a list
 ```yml
 command: touch /tmp/example
 command: ["touch", "/tmp/example"]
+```
+
+#### **user**
+User to execute as.
+
+```yml
+user: nobody
 ```
 
 ## `Signal Task`
