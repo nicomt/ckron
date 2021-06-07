@@ -48,6 +48,20 @@ test('exec: environment', async (t) => {
   await container.stop();
 });
 
+test('exec: custom user', async (t) => {
+  const container = await setup();
+  const task = new ExecTask('test', {
+    container: container.id,
+    user: 'nobody',
+    command: 'whoami'
+  });
+
+  const { exitCode, output } = await task.execute(log);
+  t.is(exitCode, 0);
+  t.is(output, 'nobody');
+  await container.stop();
+});
+
 test('exec: invalid container', async (t) => {
   const task = new ExecTask('test', {
     container: '---',

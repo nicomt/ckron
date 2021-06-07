@@ -16,4 +16,6 @@ properties:
     type: string
   environment:
     "$ref": "../definitions.yml#/list_or_dict"
+  user:
+    type: string
 additionalProperties: false
