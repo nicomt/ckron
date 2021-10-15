@@ -33,7 +33,7 @@
     "gitignore-parser": "0.0.2",
     "hashids": "^2.2.8",
     "js-yaml": "^3.14.1",
-    "nodemailer": "^6.6.3",
+    "nodemailer": "^6.6.5",
     "shlex": "^2.1.0",
     "strip-ansi": "^6.0.0"
   },
