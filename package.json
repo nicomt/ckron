@@ -31,7 +31,7 @@
     "cron": "^1.8.2",
     "dockerode": "^3.3.1",
     "gitignore-parser": "0.0.2",
-    "hashids": "^2.2.8",
+    "hashids": "^2.2.9",
     "js-yaml": "^3.14.1",
     "nodemailer": "^6.6.3",
     "shlex": "^2.1.0",
