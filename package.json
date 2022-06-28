@@ -29,7 +29,7 @@
     "chalk": "^4.1.2",
     "commander": "^6.2.1",
     "cron": "^1.8.2",
-    "dockerode": "^3.3.1",
+    "dockerode": "^3.3.2",
     "gitignore-parser": "0.0.2",
     "hashids": "^2.2.9",
     "js-yaml": "^3.14.1",
