@@ -34,7 +34,7 @@
     "hashids": "^2.2.9",
     "js-yaml": "^3.14.1",
     "nodemailer": "^6.6.5",
-    "shlex": "^2.1.0",
+    "shlex": "^2.1.2",
     "strip-ansi": "^7.0.0"
   },
   "devDependencies": {
