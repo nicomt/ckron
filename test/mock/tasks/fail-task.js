@@ -14,4 +14,4 @@ class MockFailTask {
   }
 }
 
-module.exports = MockFailTask;
+export default MockFailTask;

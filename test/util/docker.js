@@ -1,6 +1,6 @@
-const { PassThrough } = require('stream');
-const Docker = require('dockerode');
-const streamToString = require('stream-to-string');
+import { PassThrough } from 'stream';
+import Docker from 'dockerode';
+import streamToString from 'stream-to-string';
 
 class DockerUtil {
   constructor() {
@@ -20,10 +20,10 @@ class DockerUtil {
     return null;
   }
 
-  async removeImage(name) {
+  async removeImage(name, options) {
     const image = await this.getImage(name);
     if (image) {
-      await image.remove();
+      await image.remove(options);
     }
   }
 
@@ -69,4 +69,4 @@ class DockerUtil {
 
 }
 
-module.exports = new DockerUtil();
+export default DockerUtil;

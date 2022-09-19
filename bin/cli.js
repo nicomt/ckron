@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-const commander = require('commander');
-const betterAjvErrors = require('better-ajv-errors');
-const Ckron = require('../lib/ckron');
-const { version } = require('../package.json');
+import fs from 'fs';
+import { Command } from 'commander';
+import betterAjvErrors from 'better-ajv-errors';
+import Ckron from '../lib/ckron.js';
 
-const program = new commander.Command();
+const { version } = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url)));
+const program = new Command();
 
 program
   .version(version)

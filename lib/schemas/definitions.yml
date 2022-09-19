@@ -12,9 +12,9 @@ list_or_dict:
     - type: object
       patternProperties:
         ".+":
-          type:
-            - string
-            - number
-            - 'null'
+          anyOf:
+            - type: string
+            - type: number
+            - type: 'null'
       additionalProperties: false
     - "$ref": "#/list_of_strings"
