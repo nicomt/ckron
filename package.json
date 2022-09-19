@@ -9,10 +9,9 @@
     "scheduler",
     "job"
   ],
-  "description": "",
+  "description": "A cron-like job scheduler for docker",
   "type": "module",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "module": "src/ckron.js",
   "bin": {
     "ckron": "bin/cli.js"
   },
@@ -33,7 +32,6 @@
     "commander": "^9.4.0",
     "cron": "^2.1.0",
     "dockerode": "^3.3.4",
-    "esm": "^3.2.25",
     "gitignore-parser": "0.0.2",
     "hashids": "^2.2.10",
     "js-yaml": "^4.1.0",
