@@ -9,4 +9,4 @@ class MockLog {
   popNamespace() {}
 }
 
-module.exports = MockLog;
+export default MockLog;

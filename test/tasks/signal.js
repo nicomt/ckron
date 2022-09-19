@@ -1,9 +1,10 @@
-const test = require('ava');
-const dockerUtil = require('../util/docker');
-const MockLog = require('../mock/log');
-const SignalTask = require('../../lib/tasks/signal');
+import test from 'ava';
+import DockerUtil from '../util/docker.js';
+import MockLog from '../mock/log.js';
+import SignalTask from '../../lib/tasks/signal.js';
 
 const log = new MockLog();
+const dockerUtil = new DockerUtil();
 
 
 async function setup(signal) {

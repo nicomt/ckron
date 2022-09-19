@@ -13,4 +13,4 @@ class MockNotifier {
   }
 }
 
-module.exports = MockNotifier;
+export default MockNotifier;

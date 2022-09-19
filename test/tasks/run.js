@@ -1,14 +1,17 @@
-const path = require('path');
-const test = require('ava');
-const dockerUtil = require('../util/docker');
-const MockLog = require('../mock/log');
-const util = require('../../lib/util');
-const RunTask = require('../../lib/tasks/run');
+import { join, resolve } from 'path';
+import test from 'ava';
+import * as url from 'url';
+import DockerUtil from '../util/docker.js';
+import MockLog from '../mock/log.js';
+import { MAX_OUTPUT_BUFFER_SIZE } from '../../lib/util.js';
+import RunTask from '../../lib/tasks/run.js';
 
 const log = new MockLog();
+const dockerUtil = new DockerUtil();
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 async function sleep(ms) {
-  return new Promise(res => setTimeout(res, ms));
+  return new Promise((res) => { setTimeout(res, ms); });
 }
 
 test('run: simple', async (t) => {
@@ -54,7 +57,7 @@ test('run: mount', async (t) => {
   const task = new RunTask('test', {
     image: 'busybox',
     volumes: [
-      `${path.join(path.resolve(__dirname, '..'), 'fixtures/test1')}:/test`
+      `${join(resolve(__dirname, '..'), 'fixtures/test1')}:/test`
     ],
     command: 'cat /test'
   });
@@ -93,11 +96,11 @@ test('run: auto remove disabled', async (t) => {
 test('run: build', async (t) => {
   const task = new RunTask('test', {
     image: 'nicomt/test:local',
-    build: path.join(__dirname, '../fixtures'),
+    build: resolve(__dirname, '../fixtures'),
     command: 'cat /test1'
   });
 
-  await dockerUtil.removeImage('nicomt/test:local');
+  await dockerUtil.removeImage('nicomt/test:local', { force: true });
   const start = Date.now();
   const { exitCode, output } = await task.execute(log);
   t.is(exitCode, 0);
@@ -108,7 +111,7 @@ test('run: build', async (t) => {
 
   const task2 = new RunTask('test2', {
     image: 'nicomt/test:local',
-    build: path.join(__dirname, '../fixtures'),
+    build: resolve(__dirname, '../fixtures'),
     command: 'cat /test1',
     update: 'missing'
   });
@@ -118,7 +121,7 @@ test('run: build', async (t) => {
 
   const task3 = new RunTask('test3', {
     image: 'nicomt/test:local',
-    build: path.join(__dirname, '../fixtures'),
+    build: resolve(__dirname, '../fixtures'),
     command: 'cat /test1',
     update: 'always'
   });
@@ -129,7 +132,7 @@ test('run: build', async (t) => {
   try {
     const task4 = new RunTask('test4', {
       image: 'nicomt/test:local',
-      build: path.join(__dirname, '../fixtures'),
+      build: resolve(__dirname, '../fixtures'),
       command: 'cat /test4',
       update: 'missing'
     });
@@ -144,13 +147,13 @@ test('run: build dockerfile', async (t) => {
   const task = new RunTask('test', {
     image: 'nicomt/test:local1',
     build: {
-      context: path.join(__dirname, '../fixtures'),
+      context: resolve(__dirname, '../fixtures'),
       dockerfile: 'Dockerfile.1'
     },
     command: 'cat /test'
   });
 
-  await dockerUtil.removeImage('nicomt/test:local1');
+  await dockerUtil.removeImage('nicomt/test:local1', { force: true });
   const { exitCode, output } = await task.execute(log);
   t.is(exitCode, 0);
   t.is(output, 'test1');
@@ -158,7 +161,7 @@ test('run: build dockerfile', async (t) => {
   const task2 = new RunTask('test2', {
     image: 'nicomt/test:local2',
     build: {
-      context: path.join(__dirname, '../fixtures'),
+      context: resolve(__dirname, '../fixtures'),
       dockerfile: 'Dockerfile.2'
     },
     command: 'cat /test'
@@ -172,7 +175,7 @@ test('run: build dockerfile', async (t) => {
   const task3 = new RunTask('test3', {
     image: 'nicomt/test:local3',
     build: {
-      context: path.join(__dirname, '../fixtures'),
+      context: resolve(__dirname, '../fixtures'),
       dockerfile: 'Dockerfile.3'
     },
     command: 'cat /test'
@@ -188,7 +191,7 @@ test('run: build args', async (t) => {
   const task = new RunTask('test', {
     image: 'nicomt/test:localarg',
     build: {
-      context: path.join(__dirname, '../fixtures'),
+      context: resolve(__dirname, '../fixtures'),
       args: {
         argtest: 'argtest1'
       }
@@ -203,7 +206,7 @@ test('run: build args', async (t) => {
   const task2 = new RunTask('test2', {
     image: 'nicomt/test:localarg2',
     build: {
-      context: path.join(__dirname, '../fixtures'),
+      context: resolve(__dirname, '../fixtures'),
       args: [
         'argtest=argtest2'
       ]
@@ -244,7 +247,7 @@ test('run: pull never', async (t) => {
     pull: 'never'
   });
 
-  await dockerUtil.removeImage('nicomt/test:test2');
+  await dockerUtil.removeImage('nicomt/test:test2', { force: true });
   try {
     await task.execute(log);
     t.fail('Task should fail if no image available and pull never');
@@ -266,7 +269,7 @@ test('run: pull', async (t) => {
     pull: 'always'
   });
 
-  await dockerUtil.removeImage('nicomt/test:test3');
+  await dockerUtil.removeImage('nicomt/test:test3', { force: true });
   const start1 = Date.now();
   const { exitCode: ec1 } = await task.execute(log);
   t.is(ec1, 0);
@@ -349,5 +352,5 @@ test('run: very long output', async (t) => {
   const { exitCode, output } = await task.execute(log);
   t.is(task.name, 'test');
   t.is(exitCode, 0);
-  t.true(output.length <= util.MAX_OUTPUT_BUFFER_SIZE);
+  t.true(output.length <= MAX_OUTPUT_BUFFER_SIZE);
 });

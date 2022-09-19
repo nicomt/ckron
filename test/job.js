@@ -1,10 +1,8 @@
-process.env.CKRON_NOLOG = '1';
-
-const test = require('ava');
-const MockTask = require('./mock/tasks/task');
-const MockFailTask = require('./mock/tasks/fail-task');
-const MockNotifier = require('./mock/notifiers/notifier');
-const Job = require('../lib/job');
+import test from 'ava';
+import MockTask from './mock/tasks/task.js';
+import MockFailTask from './mock/tasks/fail-task.js';
+import MockNotifier from './mock/notifiers/notifier.js';
+import Job from '../lib/job.js';
 
 
 test('job: simple', async (t) => {
