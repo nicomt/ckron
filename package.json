@@ -29,7 +29,7 @@
     "ajv-formats": "^2.1.1",
     "better-ajv-errors": "^1.2.0",
     "chalk": "^5.0.1",
-    "commander": "^9.4.0",
+    "commander": "^9.4.1",
     "cron": "^2.1.0",
     "dockerode": "^3.3.4",
     "gitignore-parser": "0.0.2",
