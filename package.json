@@ -23,7 +23,7 @@
   "author": "Nicolas Martinez",
   "license": "ISC",
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^9.0.9",
+    "@apidevtools/json-schema-ref-parser": "^9.1.0",
     "@slack/webhook": "^7.0.0",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
