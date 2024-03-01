@@ -23,8 +23,8 @@
   "author": "Nicolas Martinez",
   "license": "ISC",
   "dependencies": {
-    "@apidevtools/json-schema-ref-parser": "^9.0.9",
-    "@slack/webhook": "^6.1.0",
+    "@apidevtools/json-schema-ref-parser": "^9.1.0",
+    "@slack/webhook": "^7.0.0",
     "ajv": "^8.11.2",
     "ajv-formats": "^2.1.1",
     "better-ajv-errors": "^1.2.0",
@@ -35,7 +35,7 @@
     "gitignore-parser": "0.0.2",
     "hashids": "^2.2.10",
     "js-yaml": "^4.1.0",
-    "nodemailer": "^6.7.8",
+    "nodemailer": "^6.9.9",
     "shlex": "^2.1.2",
     "strip-ansi": "^7.0.1"
   },
