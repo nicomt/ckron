@@ -2,28 +2,23 @@ name: CI
 
 on:
   workflow_dispatch:
+    inputs:
+      chosen-runner:
+        description: 'Choose the runner to use'
+        required: true
+        type: choice
+        default: 'ubuntu-latest'
+        options:
+          - 'ubuntu-latest'
+          - 'self-hosted'
   push:
     tags:
       - 'v*'
-
+env:
+  DOCKER_IMAGE: nicomt/ckron
 jobs:
-
-  publish-npm:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-
   publish-docker:
-    needs: publish-npm
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event_name == 'push' && 'ubuntu-latest' || inputs.chosen-runner }}
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-qemu-action@v1
@@ -33,7 +28,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: nicomt/ckron
+          images: ${{ env.DOCKER_IMAGE }}
 
       -
         name: Login to DockerHub
@@ -50,5 +45,7 @@ jobs:
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.DOCKER_IMAGE }}:buildcache
+          cache-to: type=registry,ref=${{ env.DOCKER_IMAGE }}:buildcache,mode=max
 
 
