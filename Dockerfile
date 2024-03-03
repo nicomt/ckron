@@ -1,7 +1,11 @@
-FROM node:14-alpine
+FROM node:20-alpine
 
-COPY . /opt/ckron
-RUN npm install --production -g /opt/ckron
+ENV NODE_ENV=production
+WORKDIR /opt/ckron
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm install --global
 
 ENTRYPOINT [ "ckron" ]
 
