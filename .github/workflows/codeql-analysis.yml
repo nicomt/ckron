@@ -3,8 +3,14 @@ name: "CodeQL"
 on:
   push:
     branches: [master]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
   pull_request:
     branches: [master]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
   schedule:
     - cron: '0 0 1 * *'
 
@@ -20,11 +26,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 2
-
-    - run: git checkout HEAD^2
-      if: ${{ github.event_name == 'pull_request' }}
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
