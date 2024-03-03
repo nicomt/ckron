@@ -18,6 +18,7 @@
   "scripts": {
     "start": "node ./bin/cli.js",
     "test": "ava -T 1m --verbose",
+    "test-ci": "ava -T 1m --verbose --no-worker-threads --serial --concurrency 1",
     "lint": "eslint ."
   },
   "author": "Nicolas Martinez",
