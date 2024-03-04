@@ -22,12 +22,12 @@ properties:
       pass:
         type: string
   to:
-    type: array
-    items:
-      type: string
-      format: email
-    uniqueItems: true
+    oneOf:
+      - type: string
+      - type: array
+        items:
+          type: string
+        uniqueItems: true
   from:
     type: string
-    format: email
 additionalProperties: false
