@@ -2,15 +2,6 @@ name: Docker Publish
 
 on:
   workflow_dispatch:
-    inputs:
-      chosen-runner:
-        description: 'Choose the runner to use'
-        required: true
-        type: choice
-        default: 'ubuntu-latest'
-        options:
-          - 'ubuntu-latest'
-          - 'self-hosted'
   push:
     tags:
       - 'v*'
@@ -18,7 +9,7 @@ env:
   DOCKER_IMAGE: nicomt/ckron
 jobs:
   publish-docker:
-    runs-on: ${{ github.event_name == 'push' && 'ubuntu-latest' || inputs.chosen-runner }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-qemu-action@v3
@@ -42,6 +33,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          push: true
           platforms: linux/amd64,linux/arm64/v8,linux/ppc64le
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
