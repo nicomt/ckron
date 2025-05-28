@@ -31,6 +31,8 @@ properties:
     type: string
   environment:
     "$ref": "../definitions.yml#/list_or_dict"
+  auth:
+    "$ref": "../definitions.yml#/list_or_dict"
   volumes:
     "$ref": "../definitions.yml#/list_of_strings"
   pull:

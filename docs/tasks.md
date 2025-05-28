@@ -15,6 +15,7 @@ runs a command inside of a new container, using a specific image.
 | [`build`](#build) | Options for building a docker image | No |
 | [`update`](#update) | Pull or build image before executing task | No |
 | [`pull`](#pull) | Pull image before executing task | No |
+| [`auth`](#auth) | Authentication information for pulling images | No |
 | [`auto_remove`](#auto_remove) | Remove container after task is finished | No |
 | [`environment`](#environment) | Add environment variables | No |
 | [`volumes`](#volumes) | Volumes to mount into the container | No |
@@ -60,6 +61,16 @@ Pull image before executing task. Default value is *missing*
 pull: always # Always pull before executing task
 pull: never # Don't pull image automatically
 pull: missing # Pull image if not found locally
+```
+
+#### **auth**
+Authentication information for pulling images. Default value is *missing*
+```yml
+auth:
+  username: '<username>'
+  password: '<password>'
+  email: '<email>'
+  serveraddress: '<serveraddress>'
 ```
 
 #### **auto_remove**
