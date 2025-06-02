@@ -25,6 +25,8 @@ properties:
     "$ref": "../definitions.yml#/string_or_list"
   entrypoint:
     "$ref": "../definitions.yml#/string_or_list"
+  networks:
+    "$ref": "../definitions.yml#/string_or_list"
   user:
     type: string
   working_dir:
