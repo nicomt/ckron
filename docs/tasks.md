@@ -18,6 +18,7 @@ runs a command inside of a new container, using a specific image.
 | [`auth`](#auth) | Authentication information for pulling images | No |
 | [`auto_remove`](#auto_remove) | Remove container after task is finished | No |
 | [`environment`](#environment) | Add environment variables | No |
+| [`networks`](#networks) | Networks to connect the container to | No |
 | [`volumes`](#volumes) | Volumes to mount into the container | No |
 | [`entrypoint`](#entrypoint) | Override the default entrypoint | No |
 | [`command`](#command) | Override the default image command | No |
@@ -93,6 +94,15 @@ environment:
   - RACK_ENV=development
   - SHOW=true
   - SESSION_SECRET
+```
+
+#### **networks**
+Connect the container to one or more networks. You must use an array.
+
+```yml
+networks:
+  - net_1
+  - net_2
 ```
 
 #### **volumes**
