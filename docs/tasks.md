@@ -15,8 +15,10 @@ runs a command inside of a new container, using a specific image.
 | [`build`](#build) | Options for building a docker image | No |
 | [`update`](#update) | Pull or build image before executing task | No |
 | [`pull`](#pull) | Pull image before executing task | No |
+| [`auth`](#auth) | Authentication information for pulling images | No |
 | [`auto_remove`](#auto_remove) | Remove container after task is finished | No |
 | [`environment`](#environment) | Add environment variables | No |
+| [`networks`](#networks) | Networks to connect the container to | No |
 | [`volumes`](#volumes) | Volumes to mount into the container | No |
 | [`entrypoint`](#entrypoint) | Override the default entrypoint | No |
 | [`command`](#command) | Override the default image command | No |
@@ -62,6 +64,16 @@ pull: never # Don't pull image automatically
 pull: missing # Pull image if not found locally
 ```
 
+#### **auth**
+Authentication information for pulling images. Default value is *missing*
+```yml
+auth:
+  username: '<username>'
+  password: '<password>'
+  email: '<email>'
+  serveraddress: '<serveraddress>'
+```
+
 #### **auto_remove**
 Remove container after task is finished. Default value is `true`
 
@@ -82,6 +94,15 @@ environment:
   - RACK_ENV=development
   - SHOW=true
   - SESSION_SECRET
+```
+
+#### **networks**
+Connect the container to one or more networks. You must use an array.
+
+```yml
+networks:
+  - net_1
+  - net_2
 ```
 
 #### **volumes**

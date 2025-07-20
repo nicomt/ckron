@@ -25,11 +25,15 @@ properties:
     "$ref": "../definitions.yml#/string_or_list"
   entrypoint:
     "$ref": "../definitions.yml#/string_or_list"
+  networks:
+    "$ref": "../definitions.yml#/string_or_list"
   user:
     type: string
   working_dir:
     type: string
   environment:
+    "$ref": "../definitions.yml#/list_or_dict"
+  auth:
     "$ref": "../definitions.yml#/list_or_dict"
   volumes:
     "$ref": "../definitions.yml#/list_of_strings"
