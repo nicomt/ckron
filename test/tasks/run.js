@@ -354,3 +354,54 @@ test('run: very long output', async (t) => {
   t.is(exitCode, 0);
   t.true(output.length <= MAX_OUTPUT_BUFFER_SIZE);
 });
+
+test('run: networks', async (t) => {
+  const net1 = await dockerUtil.docker.createNetwork({ Name: 'ckron_test_net1' });
+  const net2 = await dockerUtil.docker.createNetwork({ Name: 'ckron_test_net2' });
+  const task = new RunTask('test', {
+    image: 'busybox',
+    command: 'echo net',
+    networks: ['ckron_test_net1', 'ckron_test_net2'],
+    auto_remove: false
+  });
+
+  const { exitCode, containerId } = await task.execute(log);
+  t.is(exitCode, 0);
+  const container = dockerUtil.docker.getContainer(containerId);
+  const inspect = await container.inspect();
+  t.truthy(inspect.NetworkSettings.Networks['ckron_test_net1']);
+  t.truthy(inspect.NetworkSettings.Networks['ckron_test_net2']);
+  await container.remove();
+  await net1.remove();
+  await net2.remove();
+});
+
+test('run: networks must be array', async (t) => {
+  try {
+    // eslint-disable-next-line no-new
+    new RunTask('test', { image: 'busybox', networks: 'net' });
+    t.fail('Should not allow networks as string');
+  } catch (err) {
+    t.pass();
+  }
+});
+
+test('run: networks array must not be empty', async (t) => {
+  try {
+    // eslint-disable-next-line no-new
+    new RunTask('test', { image: 'busybox', networks: [] });
+    t.fail('Should not allow empty networks array');
+  } catch (err) {
+    t.pass();
+  }
+});
+
+test('run: networks array must contain only strings', async (t) => {
+  try {
+    // eslint-disable-next-line no-new
+    new RunTask('test', { image: 'busybox', networks: [123] });
+    t.fail('Should not allow non string network names');
+  } catch (err) {
+    t.pass();
+  }
+});
