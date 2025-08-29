@@ -1,3 +1,4 @@
+/* eslint-disable no-new */
 import { join, resolve } from 'path';
 import test from 'ava';
 import * as url from 'url';
@@ -404,7 +405,7 @@ test('run: networks nonexistent network', async (t) => {
     command: 'echo "hello from network"',
     networks: ['nonexistentnetwork12345']
   });
-  
+
   try {
     await task.execute(log);
     t.fail('Task should fail if network does not exist');
