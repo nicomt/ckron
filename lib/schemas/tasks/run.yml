@@ -50,6 +50,13 @@ properties:
     additionalProperties: false
   volumes:
     "$ref": "../definitions.yml#/list_of_strings"
+  update:
+    type: string
+    enum:
+      - missing
+      - always
+      - never
+    default: missing
   pull:
     type: string
     enum:
