@@ -39,8 +39,10 @@ program
   .command('run <job>')
   .description('Run a job')
   .option('--notify', 'send notification on error', false)
-  .action(async (_, cmd) => {
-    const { config, job, notify } = cmd.optsWithGlobals();
+  .action(async (job, options, cmd) => {
+    const globalOpts = cmd.optsWithGlobals();
+    const { config } = globalOpts;
+    const { notify } = options;
     try {
       const scheduler = new Ckron();
       await scheduler.loadConfig(config);
