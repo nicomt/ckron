@@ -354,3 +354,62 @@ test('run: very long output', async (t) => {
   t.is(exitCode, 0);
   t.true(output.length <= MAX_OUTPUT_BUFFER_SIZE);
 });
+
+test('run: networks bridge', async (t) => {
+  const task = new RunTask('test', {
+    image: 'busybox',
+    command: 'echo "hello from network"',
+    networks: ['bridge']
+  });
+
+  const { exitCode, output } = await task.execute(log);
+  t.is(exitCode, 0);
+  t.is(output, 'hello from network');
+  t.deepEqual(task.networks, { bridge: {} });
+});
+
+
+test('run: networks validation - empty array', (t) => {
+  t.throws(() => {
+    new RunTask('test', {
+      image: 'busybox',
+      networks: []
+    });
+  }, { message: 'Networks array must not be empty' });
+});
+
+test('run: networks validation - invalid array item', (t) => {
+  t.throws(() => {
+    new RunTask('test', {
+      image: 'busybox',
+      networks: ['valid', 123]
+    });
+  }, { message: 'Networks array must contain only strings' });
+});
+
+test('run: networks validation - invalid network config', (t) => {
+  t.throws(() => {
+    new RunTask('test', {
+      image: 'busybox',
+      networks: {
+        bridge: 'invalid'
+      }
+    });
+  }, { message: 'Networks must be an array' });
+});
+
+test('run: networks nonexistent network', async (t) => {
+  const task = new RunTask('test', {
+    image: 'busybox',
+    command: 'echo "hello from network"',
+    networks: ['nonexistentnetwork12345']
+  });
+  
+  try {
+    await task.execute(log);
+    t.fail('Task should fail if network does not exist');
+  } catch (err) {
+    t.is(err.statusCode, 404);
+    t.pass();
+  }
+});
