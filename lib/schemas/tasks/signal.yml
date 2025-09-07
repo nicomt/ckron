@@ -12,4 +12,8 @@ properties:
     type: string
   signal:
     type: string
+  timeout:
+    type: integer
+    minimum: 1
+    description: "Task timeout in seconds"
 additionalProperties: false

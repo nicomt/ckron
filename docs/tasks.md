@@ -24,6 +24,7 @@ runs a command inside of a new container, using a specific image.
 | [`command`](#command) | Override the default image command | No |
 | [`user`](#user) | User to run the command as | No |
 | [`working_dir`](#working_dir) | Working directory for the command | No |
+| [`timeout`](#timeout) | Task timeout in seconds | No |
 
 
 #### **image**
@@ -143,6 +144,13 @@ Working directory for the command.
 working_dir: /tmp
 ```
 
+#### **timeout**
+Task timeout in seconds. If the task runs longer than this timeout, it will be terminated.
+
+```yml
+timeout: 30 # Task will be killed after 30 seconds
+```
+
 ## `Exec Task`
 
 Runs a new command in a running container
@@ -154,6 +162,7 @@ Runs a new command in a running container
 | [`environment`](#environment) | Add environment variables | No |
 | [`working_dir`](#working_dir) | Working directory for the command | No |
 | [`user`](#user) | User to execute as | No |
+| [`timeout`](#timeout) | Task timeout in seconds | No |
 
 
 
@@ -195,6 +204,13 @@ User to execute as.
 user: nobody
 ```
 
+#### **timeout**
+Task timeout in seconds. If the task runs longer than this timeout, it will be terminated.
+
+```yml
+timeout: 30 # Task will be killed after 30 seconds
+```
+
 ## `Signal Task`
 Send a signal to the main process inside the container. Similar to `docker kill --signal`
 
@@ -202,6 +218,7 @@ Send a signal to the main process inside the container. Similar to `docker kill 
 |-|-|-|
 | [`container`](#container) | Container name or container id | Yes |
 | [`signal`](#signal) | Signal to send to the process | Yes |
+| [`timeout`](#timeout) | Task timeout in seconds | No |
 
 #### **container**
 Container name or container id of the container were the signal will be sent.
@@ -216,6 +233,13 @@ Signal to send to the process.
 
 ```yml
 signal: SIGHUP
+```
+
+#### **timeout**
+Task timeout in seconds. If the task runs longer than this timeout, it will be terminated.
+
+```yml
+timeout: 30 # Task will be killed after 30 seconds
 ```
 
 #### **working_dir**
