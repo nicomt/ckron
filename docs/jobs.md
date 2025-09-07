@@ -42,14 +42,48 @@ run_on_init: true
 ```
 
 ### **on_error**
-List of notifier names to send task errors to
+List of notifier names to send task errors to. This can include regular notifiers (email, slack) as well as job notifiers that run other jobs when failures occur.
 
 ```yml
-tasks:
+on_error:
   - notifier1
   - notifier2
-  - notifier3
+  - cleanup-job-notifier  # This can be a job notifier
 ```
+
+**Running Jobs on Failure:**
+
+To run another job when a job fails, use a job notifier. This provides a powerful way to handle job failures by running cleanup tasks, custom notifications, or recovery procedures.
+
+```yml
+notifiers:
+  cleanup-notifier:
+    type: job
+    job: cleanup-job
+
+jobs:
+  backup-job:
+    schedule: "0 2 * * *"
+    tasks:
+      - backup-database
+      - backup-files
+    on_error:
+      - email-admin
+      - cleanup-notifier  # Run cleanup-job when backup-job fails
+  
+  cleanup-job:
+    schedule: "0 0 1 1 1"  # Never run on schedule
+    enabled: false          # Only run when triggered by failure
+    tasks:
+      - cleanup-temp-files
+      - send-slack-alert
+```
+
+**Notes:**
+- Job notifiers run the target job with error notifications disabled to prevent infinite loops
+- If the specified target job doesn't exist, a warning is logged but execution continues
+- Target jobs can be regular jobs with their own schedules, or dedicated cleanup jobs that only run on failure
+- You can mix job notifiers with regular notifiers in the same `on_error` list
 
 ### **tasks**
 List of task names for this job. All tasks will be executed sequentially
