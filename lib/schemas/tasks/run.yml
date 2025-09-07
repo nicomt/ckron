@@ -47,4 +47,8 @@ properties:
   auto_remove:
     type: boolean
     default: true
+  timeout:
+    type: integer
+    minimum: 1
+    description: "Task timeout in seconds"
 additionalProperties: false

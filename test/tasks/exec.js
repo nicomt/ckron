@@ -103,3 +103,32 @@ test('exec: custom workingdir', async (t) => {
   t.is(output, '/tmp');
   await container.stop();
 });
+
+test('exec: timeout success', async (t) => {
+  const container = await setup();
+  const task = new ExecTask('test', {
+    container: container.id,
+    command: 'echo "hello world"',
+    timeout: 10
+  });
+
+  const { exitCode, output } = await task.execute(log);
+  t.is(exitCode, 0);
+  t.is(output, 'hello world');
+  await container.stop();
+});
+
+test('exec: timeout failure', async (t) => {
+  const container = await setup();
+  const task = new ExecTask('test', {
+    container: container.id,
+    command: 'sleep 5',
+    timeout: 1
+  });
+
+  await t.throwsAsync(
+    () => task.execute(log),
+    { message: /timed out after 1 seconds/ }
+  );
+  await container.stop();
+});

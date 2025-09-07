@@ -18,4 +18,8 @@ properties:
     "$ref": "../definitions.yml#/list_or_dict"
   user:
     type: string
+  timeout:
+    type: integer
+    minimum: 1
+    description: "Task timeout in seconds"
 additionalProperties: false

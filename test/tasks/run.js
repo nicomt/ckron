@@ -354,3 +354,28 @@ test('run: very long output', async (t) => {
   t.is(exitCode, 0);
   t.true(output.length <= MAX_OUTPUT_BUFFER_SIZE);
 });
+
+test('run: timeout success', async (t) => {
+  const task = new RunTask('test', {
+    image: 'busybox',
+    command: 'echo "hello world"',
+    timeout: 10
+  });
+
+  const { exitCode, output } = await task.execute(log);
+  t.is(exitCode, 0);
+  t.is(output, 'hello world');
+});
+
+test('run: timeout failure', async (t) => {
+  const task = new RunTask('test', {
+    image: 'busybox',
+    command: 'sleep 5',
+    timeout: 1
+  });
+
+  await t.throwsAsync(
+    () => task.execute(log),
+    { message: /timed out after 1 seconds/ }
+  );
+});
