@@ -14,6 +14,8 @@ properties:
     type: boolean
   on_error:
     "$ref": "definitions.yml#/list_of_strings"
+  on_failure:
+    type: string
   tasks:
     "$ref": "definitions.yml#/list_of_strings"
 additionalProperties: false
