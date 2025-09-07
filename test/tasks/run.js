@@ -2,6 +2,7 @@
 import { join, resolve } from 'path';
 import test from 'ava';
 import * as url from 'url';
+import Docker from 'dockerode';
 import DockerUtil from '../util/docker.js';
 import MockLog from '../mock/log.js';
 import { MAX_OUTPUT_BUFFER_SIZE } from '../../lib/util.js';
@@ -412,5 +413,77 @@ test('run: networks nonexistent network', async (t) => {
   } catch (err) {
     t.is(err.statusCode, 404);
     t.pass();
+  }
+});
+
+test('run: auth private image', async (t) => {
+  const docker = new Docker();
+  // Setup test registry with authentication
+  const registry = await dockerUtil.setupTestRegistry();
+
+  try {
+    // Tag and push busybox to registry
+    const busyboxImage = docker.getImage('busybox');
+    await busyboxImage.tag({
+      repo: `${registry.registryHost}/testimage`,
+      tag: 'v1'
+    });
+
+    await dockerUtil.pushImage(`${registry.registryHost}/testimage:v1`, registry.authconfig);
+    // Remove tagged image to force pull
+    const taggedImage = docker.getImage(`${registry.registryHost}/testimage:v1`);
+    await taggedImage.remove({ force: true });
+
+    // Test 1: Pull with valid read credentials should succeed
+    const task = new RunTask('test', {
+      image: `${registry.registryHost}/testimage:v1`,
+      command: 'echo "authenticated pull successful"',
+      pull: 'always',
+      auth: registry.authconfig,
+      auto_remove: true
+    });
+
+    const { exitCode, output } = await task.execute(log);
+    t.is(exitCode, 0);
+    t.is(output, 'authenticated pull successful');
+    t.true(task.lastPull > 0, 'Image should have been pulled');
+
+    // Test 2: Pull without auth should fail
+    const taskNoAuth = new RunTask('test-no-auth', {
+      image: `${registry.registryHost}/testimage:v1`,
+      command: 'echo "pull without auth"',
+      pull: 'always'
+    });
+
+    // Should fail since registry requires auth
+    try {
+      await taskNoAuth.execute(log);
+      t.fail('Task should fail without authentication');
+    } catch (err) {
+      t.assert(err.message.includes('access denied'), `Expected auth error, got: ${err.statusCode}: ${err.message}`);
+    }
+
+    // Test 3: Pull with invalid credentials should fail
+    const taskBadAuth = new RunTask('test-bad-auth', {
+      image: `${registry.registryHost}/testimage:v1`,
+      command: 'echo "pull with bad auth"',
+      pull: 'always',
+      auth: {
+        username: 'wronguser',
+        password: 'wrongpass',
+        serveraddress: registry.registryHost
+      }
+    });
+
+    // Should fail with wrong credentials
+    try {
+      await taskBadAuth.execute(log);
+      t.fail('Task should fail with invalid credentials');
+    } catch (err) {
+      t.assert(err.message.includes('Unauthorized'), `Expected auth error, got: ${err.statusCode}: ${err.message}`);
+    }
+
+  } finally {
+    await DockerUtil.teardownTestRegistry(registry);
   }
 });

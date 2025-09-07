@@ -1,0 +1,10 @@
+
+:5080 {
+  basicauth /v2/* {
+    testuser $2a$14$oFriFb6gu4YitHsCf9QCje6Y2qYkNi5I9PPZ0TI4/P.6dOG6XOnFi
+  }
+  reverse_proxy registry:5000
+  header Access-Control-Allow-Origin *
+  header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+  header Access-Control-Allow-Headers "Authorization, Content-Type"
+}
