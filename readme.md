@@ -67,13 +67,23 @@ tasks:
     environment:
       HELLO: World
     image: ubuntu:latest
+  cleanup-01:
+    type: run
+    command: echo "Cleaning up after failure"
+    image: ubuntu:latest
 jobs:
   job-01:
     schedule: "*/30 * * * * *"
     on_error: ["email-dev"]
+    on_failure: cleanup-job
     run_on_init: true
     tasks:
       - test-01
+  cleanup-job:
+    schedule: "0 0 1 1 1"  # Never run on schedule
+    enabled: false         # Only triggered by job failures
+    tasks:
+      - cleanup-01
 notifiers:
   email-dev:
     type: email
