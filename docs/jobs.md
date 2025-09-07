@@ -11,7 +11,6 @@ Schedule for a list of tasks
 | [`enabled`](#enabled) | When false job will not execute | No |
 | [`run_on_init`](#run_on_init) | Run job on start | No |
 | [`on_error`](#on_error) | List of notifier names to send task errors to | No |
-| [`on_failure`](#on_failure) | Job name to run when this job fails | No |
 | [`tasks`](#tasks) | List of task names for this job | Yes |
 
 ### **schedule**
@@ -43,35 +42,36 @@ run_on_init: true
 ```
 
 ### **on_error**
-List of notifier names to send task errors to
+List of notifier names to send task errors to. This can include regular notifiers (email, slack) as well as job notifiers that run other jobs when failures occur.
 
 ```yml
 on_error:
   - notifier1
   - notifier2
-  - notifier3
+  - cleanup-job-notifier  # This can be a job notifier
 ```
 
-### **on_failure**
-Job name to run when this job fails. This provides a powerful way to handle job failures by running cleanup tasks, custom notifications, or recovery procedures. The failure job will run immediately after the main job fails, but before error notifications are sent.
+**Running Jobs on Failure:**
+
+To run another job when a job fails, use a job notifier. This provides a powerful way to handle job failures by running cleanup tasks, custom notifications, or recovery procedures.
 
 ```yml
-on_failure: cleanup-job
-```
+notifiers:
+  cleanup-notifier:
+    type: job
+    job: cleanup-job
 
-**Example configuration:**
-```yml
 jobs:
   backup-job:
     schedule: "0 2 * * *"
     tasks:
       - backup-database
       - backup-files
-    on_failure: cleanup-failed-backup
     on_error:
       - email-admin
+      - cleanup-notifier  # Run cleanup-job when backup-job fails
   
-  cleanup-failed-backup:
+  cleanup-job:
     schedule: "0 0 1 1 1"  # Never run on schedule
     enabled: false          # Only run when triggered by failure
     tasks:
@@ -80,9 +80,10 @@ jobs:
 ```
 
 **Notes:**
-- The failure job runs with error notifications disabled to prevent infinite loops
-- If the specified failure job doesn't exist, a warning is logged but execution continues
-- Failure jobs can be regular jobs with their own schedules, or dedicated cleanup jobs that only run on failure
+- Job notifiers run the target job with error notifications disabled to prevent infinite loops
+- If the specified target job doesn't exist, a warning is logged but execution continues
+- Target jobs can be regular jobs with their own schedules, or dedicated cleanup jobs that only run on failure
+- You can mix job notifiers with regular notifiers in the same `on_error` list
 
 ### **tasks**
 List of task names for this job. All tasks will be executed sequentially

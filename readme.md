@@ -74,8 +74,7 @@ tasks:
 jobs:
   job-01:
     schedule: "*/30 * * * * *"
-    on_error: ["email-dev"]
-    on_failure: cleanup-job
+    on_error: ["email-dev", "cleanup-notifier"]
     run_on_init: true
     tasks:
       - test-01
@@ -94,4 +93,7 @@ notifiers:
       pass: XXXXXXX
     to: dev@example.com
     from: '"Ckron Scheduler" <ckron@example.com>'
+  cleanup-notifier:
+    type: job
+    job: cleanup-job
 ```

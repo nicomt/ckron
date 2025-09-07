@@ -1,3 +1,4 @@
 oneOf:
   - "$ref": "notifiers/email.yml"
   - "$ref": "notifiers/slack.yml"
+  - "$ref": "notifiers/job.yml"
