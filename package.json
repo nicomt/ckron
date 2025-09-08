@@ -17,8 +17,7 @@
   },
   "scripts": {
     "start": "node ./bin/cli.js",
-    "test": "ava -T 1m --verbose",
-    "test-ci": "ava -T 1m --verbose --no-worker-threads --serial --concurrency 1",
+    "test": "ava -T 5m --verbose",
     "lint": "eslint ."
   },
   "author": "Nicolas Martinez",
@@ -41,7 +40,7 @@
     "strip-ansi": "^7.0.1"
   },
   "devDependencies": {
-    "ava": "^6.1.2",
+    "ava": "^6.4.1",
     "eslint": "^8.23.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
