@@ -34,9 +34,29 @@ properties:
   environment:
     "$ref": "../definitions.yml#/list_or_dict"
   auth:
-    "$ref": "../definitions.yml#/list_or_dict"
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+      email:
+        type: string
+      serveraddress:
+        type: string
+    required:
+      - username
+      - password
+    additionalProperties: false
   volumes:
     "$ref": "../definitions.yml#/list_of_strings"
+  update:
+    type: string
+    enum:
+      - missing
+      - always
+      - never
+    default: missing
   pull:
     type: string
     enum:
